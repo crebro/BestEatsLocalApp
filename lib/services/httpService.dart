@@ -10,6 +10,16 @@ class HttpService {
     return response;
   }
 
+  Future<http.StreamedResponse> postRequest(Map params,
+      {Map<String, String> data}) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse(this.requestLocation + "?apiKey=8865732618"));
+    print(this.requestLocation + "?apiKey=8865732618");
+    request.fields.addAll(data);
+    http.StreamedResponse response = await request.send();
+    return response;
+  }
+
   String addGetParams(Map params) {
     String locationwithparams = this.requestLocation + "?";
     int i = 0;

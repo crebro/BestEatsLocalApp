@@ -18,7 +18,24 @@ class ApiService {
     return responseCoupons;
   }
 
+  Future<dynamic> login(String email, String password) async {
+    HttpService httpService =
+        HttpService(requestLocation: requestLocations['AUTHENTICATE_LOGIN']);
+    Map<String, String> data = {
+      "email": email,
+      "password": password,
+      "device_name": "android",
+    };
+    var response =
+        await httpService.postRequest(requestGetParams(), data: data);
+    print(await response.stream.bytesToString());
+  }
+
   Map requestGetParams() {
     return {"apiKey": apiKey};
+  }
+
+  Map loginParams(String email, String password) {
+    return {"apiKey": apiKey, "email": email, "password": password};
   }
 }
