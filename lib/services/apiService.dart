@@ -33,6 +33,19 @@ class ApiService {
     return responseData;
   }
 
+  Future<Map> warmUser(String token) async {
+    HttpService httpService =
+        HttpService(requestLocation: requestLocations['AUTHENTICATE_TOKEN']);
+    Map<String, String> data = {
+      "token": token,
+    };
+    var response =
+        await httpService.postRequest(requestGetParams(), data: data);
+    Map responseData =
+        jsonDecode(await response.stream.bytesToString())['data'];
+    return responseData;
+  }
+
   Map requestGetParams() {
     return {"apiKey": apiKey};
   }
