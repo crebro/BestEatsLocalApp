@@ -18,7 +18,7 @@ class ApiService {
     return responseCoupons;
   }
 
-  Future<dynamic> login(String email, String password) async {
+  Future<Map> login(String email, String password) async {
     HttpService httpService =
         HttpService(requestLocation: requestLocations['AUTHENTICATE_LOGIN']);
     Map<String, String> data = {
@@ -28,7 +28,9 @@ class ApiService {
     };
     var response =
         await httpService.postRequest(requestGetParams(), data: data);
-    print(await response.stream.bytesToString());
+    Map responseData =
+        jsonDecode(await response.stream.bytesToString())['data'];
+    return responseData;
   }
 
   Map requestGetParams() {

@@ -1,6 +1,8 @@
 import 'package:BestEatsLocal/components/plain_button.dart';
+import 'package:BestEatsLocal/providers/userProvider.dart';
 import 'package:BestEatsLocal/services/apiService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -98,9 +101,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     PlainButton(
                       icon: Icons.lock,
-                      onTap: () {
+                      onTap: () async {
                         if (_formKey.currentState.validate()) {
-                          this.apiService.login(email, password);
+                          bool success =
+                              await userProvider.loginUser(email, password);
+                          if (success) {
+                            Navigator.pop(context);
+                          }
                         }
                       },
                       value: "Login",
