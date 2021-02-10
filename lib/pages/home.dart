@@ -1,6 +1,7 @@
 import 'package:BestEatsLocal/components/all_coupons.dart';
 import 'package:BestEatsLocal/components/appbar.dart';
 import 'package:BestEatsLocal/components/plain_button.dart';
+import 'package:BestEatsLocal/pages/auth/login.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,7 +17,10 @@ class HomePage extends StatelessWidget {
           AllCoupons(),
           PlainButton(
             icon: Icons.redeem,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginPage()));
+            },
             value: "Login to Start Saving",
           )
         ],
