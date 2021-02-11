@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function togglePage;
-  LoginPage({@required this.togglePage});
+  RegisterPage({@required this.togglePage});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  String name;
   String email;
   String password;
   ApiService apiService = ApiService();
@@ -46,6 +47,34 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        "Name".text.xl2.bold.make(),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Please Enter a Username" : null,
+                          onChanged: (value) {
+                            setState(() {
+                              this.name = value;
+                            });
+                          },
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            fillColor: Color(0xfff3f3f3),
+                            filled: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -113,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         }
                       },
-                      value: "Login",
+                      value: "Register",
                     ),
                     SizedBox(
                       height: 10,
@@ -123,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                         widget.togglePage();
                       },
                       child: Text(
-                        "New to BestEatsLocal? Register Here",
+                        "Already Have an Account? Sign in Here",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     )

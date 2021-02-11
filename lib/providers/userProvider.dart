@@ -30,4 +30,11 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("token");
+    this._user = null;
+    notifyListeners();
+  }
 }
