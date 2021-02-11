@@ -37,4 +37,20 @@ class UserProvider extends ChangeNotifier {
     this._user = null;
     notifyListeners();
   }
+
+  Future<bool> registerUser(
+      {String name, String email, String password}) async {
+    ApiService apiService = ApiService();
+    Map response =
+        await apiService.register(name: name, email: email, password: password);
+    if (response != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      this._user = response;
+      prefs.setString('token', response['token']);
+      notifyListeners();
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

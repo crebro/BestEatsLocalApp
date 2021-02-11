@@ -43,120 +43,129 @@ class _RegisterPageState extends State<RegisterPage> {
               Expanded(
                   child: Form(
                 key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        "Name".text.xl2.bold.make(),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        TextFormField(
-                          validator: (value) =>
-                              value.isEmpty ? "Please Enter a Username" : null,
-                          onChanged: (value) {
-                            setState(() {
-                              this.name = value;
-                            });
-                          },
-                          style: TextStyle(fontSize: 20),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            fillColor: Color(0xfff3f3f3),
-                            filled: true,
+                child: Center(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          "Name".text.xl2.bold.make(),
+                          SizedBox(
+                            height: 5,
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        "Email Address".text.xl2.bold.make(),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        TextFormField(
-                          validator: (value) =>
-                              value.isEmpty ? "Please Enter an Email" : null,
-                          onChanged: (value) {
-                            setState(() {
-                              this.email = value;
-                            });
-                          },
-                          style: TextStyle(fontSize: 20),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            fillColor: Color(0xfff3f3f3),
-                            filled: true,
+                          TextFormField(
+                            validator: (value) => value.isEmpty
+                                ? "Please Enter a Username"
+                                : null,
+                            onChanged: (value) {
+                              setState(() {
+                                this.name = value;
+                              });
+                            },
+                            style: TextStyle(fontSize: 20),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              fillColor: Color(0xfff3f3f3),
+                              filled: true,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        "Password".text.xl2.bold.make(),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        TextFormField(
-                          validator: (value) =>
-                              value.isEmpty ? "Please Enter a Password" : null,
-                          onChanged: (value) {
-                            setState(() {
-                              this.password = value;
-                            });
-                          },
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            fillColor: Color(0xfff3f3f3),
-                            filled: true,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    PlainButton(
-                      icon: Icons.lock,
-                      onTap: () async {
-                        if (_formKey.currentState.validate()) {
-                          bool success =
-                              await userProvider.loginUser(email, password);
-                          if (success) {
-                            Navigator.pop(context);
-                          }
-                        }
-                      },
-                      value: "Register",
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        widget.togglePage();
-                      },
-                      child: Text(
-                        "Already Have an Account? Sign in Here",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        ],
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          "Email Address".text.xl2.bold.make(),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          TextFormField(
+                            validator: (value) =>
+                                value.isEmpty ? "Please Enter an Email" : null,
+                            onChanged: (value) {
+                              setState(() {
+                                this.email = value;
+                              });
+                            },
+                            style: TextStyle(fontSize: 20),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              fillColor: Color(0xfff3f3f3),
+                              filled: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          "Password".text.xl2.bold.make(),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          TextFormField(
+                            validator: (value) => value.isEmpty
+                                ? "Please Enter a Password"
+                                : null,
+                            onChanged: (value) {
+                              setState(() {
+                                this.password = value;
+                              });
+                            },
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              fillColor: Color(0xfff3f3f3),
+                              filled: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      PlainButton(
+                        icon: Icons.lock,
+                        onTap: () async {
+                          if (_formKey.currentState.validate()) {
+                            bool success = await userProvider.registerUser(
+                                name: name, email: email, password: password);
+                            print(success);
+                            if (success) {
+                              Navigator.pop(context);
+                            } else {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content:
+                                      Text("Error Registering an Account")));
+                            }
+                          }
+                        },
+                        value: "Register",
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          widget.togglePage();
+                        },
+                        child: Text(
+                          "Already Have an Account? Sign in Here",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ))
             ],

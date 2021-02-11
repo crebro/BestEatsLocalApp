@@ -28,9 +28,32 @@ class ApiService {
     };
     var response =
         await httpService.postRequest(requestGetParams(), data: data);
-    Map responseData =
-        jsonDecode(await response.stream.bytesToString())['data'];
-    return responseData;
+    try {
+      Map responseData =
+          jsonDecode(await response.stream.bytesToString())['data'];
+      return responseData;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<Map> register({String name, String email, String password}) async {
+    HttpService httpService =
+        HttpService(requestLocation: requestLocations['AUTHENTICATE_REGISTER']);
+    Map<String, String> data = {
+      "email": email,
+      "password": password,
+      "name": name,
+    };
+    var response =
+        await httpService.postRequest(requestGetParams(), data: data);
+    try {
+      Map responseData =
+          jsonDecode(await response.stream.bytesToString())['data'];
+      return responseData;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<Map> warmUser(String token) async {
@@ -41,16 +64,16 @@ class ApiService {
     };
     var response =
         await httpService.postRequest(requestGetParams(), data: data);
-    Map responseData =
-        jsonDecode(await response.stream.bytesToString())['data'];
-    return responseData;
+    try {
+      Map responseData =
+          jsonDecode(await response.stream.bytesToString())['data'];
+      return responseData;
+    } catch (e) {
+      return null;
+    }
   }
 
   Map requestGetParams() {
     return {"apiKey": apiKey};
-  }
-
-  Map loginParams(String email, String password) {
-    return {"apiKey": apiKey, "email": email, "password": password};
   }
 }
