@@ -73,6 +73,36 @@ class ApiService {
     }
   }
 
+  Future<bool> registerRestaurant({
+    String name,
+    String phone,
+    String email,
+    String website,
+    String imagePath,
+  }) async {
+    HttpService httpService =
+        HttpService(requestLocation: requestLocations['RESOURCE_RESTAURANT']);
+    Map<String, String> data = {
+      "name": name,
+      "phone": phone,
+      "email": email,
+      "website": website,
+    };
+    var response = await httpService.postRequestWithImage(requestGetParams(),
+        data: data,
+        imageKey: "image",
+        imagePath: imagePath,
+        filename: imagePath.split('/').last);
+    print(response.toString());
+    try {
+      Map responseData = jsonDecode(response.toString())['data'];
+      print(responseData);
+      return true;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Map requestGetParams() {
     return {"apiKey": apiKey};
   }

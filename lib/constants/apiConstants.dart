@@ -5,4 +5,5 @@ const requestLocations = {
   "AUTHENTICATE_LOGIN": "$baseURL/login",
   "AUTHENTICATE_REGISTER": "$baseURL/register",
   "AUTHENTICATE_TOKEN": "$baseURL/usertoken",
+  "RESOURCE_RESTAURANT": "$baseURL/restaurants"
 };

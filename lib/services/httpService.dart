@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class HttpService {
   String requestLocation;
@@ -18,6 +21,29 @@ class HttpService {
     request.fields.addAll(data);
     http.StreamedResponse response = await request.send();
     return response;
+  }
+
+  Future<Response> postRequestWithImage(Map params,
+      {Map<String, String> data,
+      String imagePath,
+      String imageKey,
+      String filename}) async {
+    String location = this.requestLocation + "?apiKey=8865732618";
+    Map<String, dynamic> requestData = {
+      imageKey: await MultipartFile.fromFile(
+        imagePath,
+      ),
+    };
+    requestData.addAll(data);
+    FormData formData = FormData.fromMap(requestData);
+    Dio dio = new Dio();
+    try {
+      Response response = await dio.post(location, data: formData);
+      return response;
+    } catch (e) {
+      print("There was an Error ${e.toString()}");
+      return null;
+    }
   }
 
   String addGetParams(Map params) {
