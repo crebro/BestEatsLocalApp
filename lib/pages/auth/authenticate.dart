@@ -19,10 +19,12 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     if (showLogin) {
-      return LoginPage(
-        togglePage: this.toggleLogin,
+      return Scaffold(
+        body: LoginPage(
+          togglePage: this.toggleLogin,
+        ),
       );
     }
-    return RegisterPage(togglePage: this.toggleLogin);
+    return Scaffold(body: RegisterPage(togglePage: this.toggleLogin));
   }
 }

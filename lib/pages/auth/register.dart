@@ -23,153 +23,148 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Row(
+    return SafeArea(
+      child: Container(
+        margin: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.arrow_back_ios),
+                  "Back".text.xl.bold.make()
+                ],
+              ),
+            ),
+            Expanded(
+                child: Form(
+              key: _formKey,
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
                   children: [
-                    Icon(Icons.arrow_back_ios),
-                    "Back".text.xl.bold.make()
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        "Name".text.xl2.bold.make(),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Please Enter a Username" : null,
+                          onChanged: (value) {
+                            setState(() {
+                              this.name = value;
+                            });
+                          },
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            fillColor: Color(0xfff3f3f3),
+                            filled: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        "Email Address".text.xl2.bold.make(),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Please Enter an Email" : null,
+                          onChanged: (value) {
+                            setState(() {
+                              this.email = value;
+                            });
+                          },
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            fillColor: Color(0xfff3f3f3),
+                            filled: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        "Password".text.xl2.bold.make(),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        TextFormField(
+                          validator: (value) =>
+                              value.isEmpty ? "Please Enter a Password" : null,
+                          onChanged: (value) {
+                            setState(() {
+                              this.password = value;
+                            });
+                          },
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            fillColor: Color(0xfff3f3f3),
+                            filled: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    PlainButton(
+                      icon: Icons.lock,
+                      onTap: () async {
+                        if (_formKey.currentState.validate()) {
+                          bool success = await userProvider.registerUser(
+                              name: name, email: email, password: password);
+                          print(success);
+                          if (success) {
+                            Navigator.pop(context);
+                          } else {
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Error Registering an Account")));
+                          }
+                        }
+                      },
+                      value: "Register",
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        widget.togglePage();
+                      },
+                      child: Text(
+                        "Already Have an Account? Sign in Here",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    )
                   ],
                 ),
               ),
-              Expanded(
-                  child: Form(
-                key: _formKey,
-                child: Center(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          "Name".text.xl2.bold.make(),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          TextFormField(
-                            validator: (value) => value.isEmpty
-                                ? "Please Enter a Username"
-                                : null,
-                            onChanged: (value) {
-                              setState(() {
-                                this.name = value;
-                              });
-                            },
-                            style: TextStyle(fontSize: 20),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              fillColor: Color(0xfff3f3f3),
-                              filled: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          "Email Address".text.xl2.bold.make(),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          TextFormField(
-                            validator: (value) =>
-                                value.isEmpty ? "Please Enter an Email" : null,
-                            onChanged: (value) {
-                              setState(() {
-                                this.email = value;
-                              });
-                            },
-                            style: TextStyle(fontSize: 20),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              fillColor: Color(0xfff3f3f3),
-                              filled: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          "Password".text.xl2.bold.make(),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          TextFormField(
-                            validator: (value) => value.isEmpty
-                                ? "Please Enter a Password"
-                                : null,
-                            onChanged: (value) {
-                              setState(() {
-                                this.password = value;
-                              });
-                            },
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              fillColor: Color(0xfff3f3f3),
-                              filled: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      PlainButton(
-                        icon: Icons.lock,
-                        onTap: () async {
-                          if (_formKey.currentState.validate()) {
-                            bool success = await userProvider.registerUser(
-                                name: name, email: email, password: password);
-                            print(success);
-                            if (success) {
-                              Navigator.pop(context);
-                            } else {
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                  content:
-                                      Text("Error Registering an Account")));
-                            }
-                          }
-                        },
-                        value: "Register",
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          widget.togglePage();
-                        },
-                        child: Text(
-                          "Already Have an Account? Sign in Here",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ))
-            ],
-          ),
+            ))
+          ],
         ),
       ),
     );
