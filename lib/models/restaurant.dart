@@ -7,12 +7,19 @@ class Restaurant {
   String email;
   String website;
   ApiCoupon coupon;
+  bool hasCoupon = true;
+  int id;
   Restaurant.fromMap(Map map) {
     this.name = map['name'];
     this.imageLocation = map['image'];
     this.phone = map['phone'];
     this.email = map['email'];
     this.website = map['website'];
-    this.coupon = ApiCoupon.fromMap(map['coupon']);
+    this.id = map['id'];
+    if (!map['coupon'].isEmpty) {
+      this.coupon = ApiCoupon.fromMap(map['coupon']);
+    } else {
+      this.hasCoupon = false;
+    }
   }
 }

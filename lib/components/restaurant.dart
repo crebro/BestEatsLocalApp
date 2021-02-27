@@ -41,7 +41,9 @@ class UiRestaurant extends StatelessWidget {
             children: [
               Container(
                 width: 180,
-                child: getTruncatedTitle(restaurant.coupon.value)
+                child: getTruncatedTitle(restaurant.hasCoupon
+                        ? restaurant.coupon.value
+                        : restaurant.name)
                     .text
                     .xl
                     .maxLines(2)

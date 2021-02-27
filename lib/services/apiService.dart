@@ -9,11 +9,10 @@ class ApiService {
     HttpService httpService =
         HttpService(requestLocation: requestLocations['GET_ALL_COUPONS']);
     List<dynamic> response = jsonDecode(
-        (await httpService.getRequest(requestGetParams())).body)['data'];
+        (await httpService.getRequest(_requestGetParams())).body)['data'];
     List<ApiCoupon> responseCoupons = response.map((coupon) {
       return ApiCoupon(
-          value: coupon['display_text'],
-          restaurant: Restaurant.fromMap(coupon['restaurant']));
+          value: coupon['display_text'], description: coupon['description']);
     }).toList();
     return responseCoupons;
   }
@@ -22,11 +21,22 @@ class ApiService {
     HttpService httpService =
         HttpService(requestLocation: requestLocations['GET_ALL_RESTUARANTS']);
     List<dynamic> response = jsonDecode(
-        (await httpService.getRequest(requestGetParams())).body)['data'];
+        (await httpService.getRequest(_requestGetParams())).body)['data'];
     List<Restaurant> responseRestaurants = response.map((restaurant) {
       return Restaurant.fromMap(restaurant);
     }).toList();
     return responseRestaurants;
+  }
+
+  Future<List> getCouponsFromRetaurant(int restaurantId) async {
+    HttpService httpService = HttpService(
+        requestLocation: _getRestaurantCouponsEndpoint(restaurantId));
+    List<dynamic> response = jsonDecode(
+        (await httpService.getRequest(_requestGetParams())).body)['data'];
+    List<ApiCoupon> responseCouopns = response.map((coupon) {
+      return ApiCoupon.fromMap(coupon);
+    }).toList();
+    return responseCouopns;
   }
 
   Future<Map> login(String email, String password) async {
@@ -38,7 +48,7 @@ class ApiService {
       "device_name": "android",
     };
     var response =
-        await httpService.postRequest(requestGetParams(), data: data);
+        await httpService.postRequest(_requestGetParams(), data: data);
     try {
       Map responseData =
           jsonDecode(await response.stream.bytesToString())['data'];
@@ -57,7 +67,7 @@ class ApiService {
       "name": name,
     };
     var response =
-        await httpService.postRequest(requestGetParams(), data: data);
+        await httpService.postRequest(_requestGetParams(), data: data);
     try {
       Map responseData =
           jsonDecode(await response.stream.bytesToString())['data'];
@@ -74,7 +84,7 @@ class ApiService {
       "token": token,
     };
     var response =
-        await httpService.postRequest(requestGetParams(), data: data);
+        await httpService.postRequest(_requestGetParams(), data: data);
     try {
       Map responseData =
           jsonDecode(await response.stream.bytesToString())['data'];
@@ -84,7 +94,11 @@ class ApiService {
     }
   }
 
-  Map requestGetParams() {
+  Map _requestGetParams() {
     return {"apiKey": apiKey};
+  }
+
+  String _getRestaurantCouponsEndpoint(int restaurantId) {
+    return "$baseURL/restaurants/$restaurantId/coupons";
   }
 }
