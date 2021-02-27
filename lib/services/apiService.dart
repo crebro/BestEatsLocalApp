@@ -18,6 +18,17 @@ class ApiService {
     return responseCoupons;
   }
 
+  Future<List> getRestaurants() async {
+    HttpService httpService =
+        HttpService(requestLocation: requestLocations['GET_ALL_RESTUARANTS']);
+    List<dynamic> response = jsonDecode(
+        (await httpService.getRequest(requestGetParams())).body)['data'];
+    List<Restaurant> responseRestaurants = response.map((restaurant) {
+      return Restaurant.fromMap(restaurant);
+    }).toList();
+    return responseRestaurants;
+  }
+
   Future<Map> login(String email, String password) async {
     HttpService httpService =
         HttpService(requestLocation: requestLocations['AUTHENTICATE_LOGIN']);

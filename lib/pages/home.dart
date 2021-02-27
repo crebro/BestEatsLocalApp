@@ -1,4 +1,4 @@
-import 'package:BestEatsLocal/components/all_coupons.dart';
+import 'package:BestEatsLocal/components/all_restaurants.dart';
 import 'package:BestEatsLocal/components/appbar.dart';
 import 'package:BestEatsLocal/components/appdrawer.dart';
 import 'package:BestEatsLocal/components/plain_button.dart';
@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ApplicationBar(),
-              AllCoupons(),
+              AllRestaurants(),
               userProvider.user == null
                   ? PlainButton(
                       icon: Icons.redeem,
