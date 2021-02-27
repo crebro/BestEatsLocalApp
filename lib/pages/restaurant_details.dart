@@ -4,6 +4,7 @@ import 'package:BestEatsLocal/models/restaurant.dart';
 import 'package:BestEatsLocal/services/apiService.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:BestEatsLocal/components/plain_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class RestaurantDetails extends StatefulWidget {
@@ -99,6 +100,62 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                           ApiCoupon coupon = this.coupons[index];
                           return Card(
                             child: ListTile(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                          'Redeem a Coupon',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        content: Container(
+                                          child: Text(coupon.value),
+                                          height: 100,
+                                          width: 200,
+                                        ),
+                                        actions: [
+                                          PlainButton(
+                                            icon: Icons.redeem,
+                                            value: "Redeem",
+                                            onTap: () {},
+                                          )
+                                          // FlatButton(
+                                          //     color: Colors.blue,
+                                          //     onPressed: () async {},
+                                          //     child: Container(
+                                          //       decoration: BoxDecoration(
+                                          //           borderRadius:
+                                          //               BorderRadius.circular(
+                                          //                   20)),
+                                          //       padding: EdgeInsets.all(7),
+                                          //       child: Row(
+                                          //         mainAxisAlignment:
+                                          //             MainAxisAlignment.center,
+                                          //         children: [
+                                          //           Icon(
+                                          //             Icons.redeem,
+                                          //             color: Colors.white,
+                                          //             size: 30,
+                                          //           ),
+                                          //           SizedBox(
+                                          //             width: 10,
+                                          //           ),
+                                          //           Text(
+                                          //             "Redeem",
+                                          //             style: TextStyle(
+                                          //                 fontWeight:
+                                          //                     FontWeight.bold,
+                                          //                 fontSize: 20),
+                                          //           )
+                                          //         ],
+                                          //       ),
+                                          //     ))
+                                        ],
+                                      );
+                                    });
+                              },
                               trailing: Icon(
                                 Icons.arrow_right,
                                 color: Colors.black,

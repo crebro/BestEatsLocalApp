@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class PlainButton extends StatelessWidget {
   final Function onTap;
@@ -19,8 +18,8 @@ class PlainButton extends StatelessWidget {
       onTap: () => this.onTap(),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.blue),
-        padding: EdgeInsets.symmetric(vertical: 10),
+            borderRadius: BorderRadius.circular(10), color: Colors.blue),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -32,14 +31,14 @@ class PlainButton extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
-            this
-                .value
-                .text
-                .fontFamily(GoogleFonts.nunito().fontFamily)
-                .bold
-                .white
-                .xl2
-                .make(),
+            Text(
+              this.value,
+              style: TextStyle(
+                  fontFamily: GoogleFonts.nunito().fontFamily,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 20),
+            )
           ],
         ),
       ),
