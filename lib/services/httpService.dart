@@ -14,11 +14,14 @@ class HttpService {
   }
 
   Future<http.StreamedResponse> postRequest(Map params,
-      {Map<String, String> data}) async {
+      {Map<String, String> data, Map<String, String> headers}) async {
     var request = http.MultipartRequest(
         'POST', Uri.parse(this.requestLocation + "?apiKey=8865732618"));
     print(this.requestLocation + "?apiKey=8865732618");
     request.fields.addAll(data);
+    if (headers != null) {
+      request.headers.addAll(headers);
+    }
     http.StreamedResponse response = await request.send();
     return response;
   }

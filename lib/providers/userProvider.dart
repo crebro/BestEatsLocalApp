@@ -53,4 +53,17 @@ class UserProvider extends ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> redeemCoupon({int couponId}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("token") != null) {
+      ApiService apiService = ApiService();
+      Map response = await apiService.redeemCoupon(prefs.getString("token"),
+          couponId: couponId, userId: _user['id']);
+      // Returning true if message_code is success, false if something else
+      return response['message_code'] == "SUCCESS";
+    }
+    // Returning False Because the user is not logged in
+    return false;
+  }
 }

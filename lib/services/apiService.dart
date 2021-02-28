@@ -94,6 +94,27 @@ class ApiService {
     }
   }
 
+  Future<Map> redeemCoupon(String token, {int userId, int couponId}) async {
+    HttpService httpService =
+        HttpService(requestLocation: requestLocations['REDEEM_COUPON']);
+    Map<String, String> data = {
+      "user_id": userId.toString(),
+      "coupon_id": couponId.toString(),
+    };
+    Map<String, String> headers = {
+      "verify-token": token,
+    };
+    var response = await httpService.postRequest(_requestGetParams(),
+        data: data, headers: headers);
+    try {
+      Map responseData = jsonDecode(await response.stream.bytesToString());
+      return responseData;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
   Map _requestGetParams() {
     return {"apiKey": apiKey};
   }
