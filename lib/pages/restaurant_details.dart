@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:BestEatsLocal/models/coupon.dart';
 import 'package:BestEatsLocal/models/restaurant.dart';
+import 'package:BestEatsLocal/pages/auth/authenticate.dart';
+import 'package:BestEatsLocal/pages/auth/login.dart';
 import 'package:BestEatsLocal/providers/userProvider.dart';
 import 'package:BestEatsLocal/services/apiService.dart';
 import 'package:flutter/material.dart';
@@ -125,33 +127,53 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                                               width: 200,
                                             ),
                                             actions: [
-                                              PlainButton(
-                                                icon: Icons.redeem,
-                                                value: "Redeem",
-                                                onTap: () async {
-                                                  bool isSuccess =
-                                                      await userProvider
-                                                          .redeemCoupon(
-                                                              couponId:
-                                                                  coupon.id);
-                                                  Navigator.pop(context);
-                                                  if (isSuccess) {
-                                                    _scaffoldKey.currentState
-                                                        .showSnackBar(SnackBar(
-                                                      content: Text(
-                                                        'Successfully Created Coupon',
-                                                      ),
-                                                    ));
-                                                  } else {
-                                                    _scaffoldKey.currentState
-                                                        .showSnackBar(SnackBar(
-                                                      content: Text(
-                                                        'Already Redeemed the Same Coupon',
-                                                      ),
-                                                    ));
-                                                  }
-                                                },
-                                              )
+                                              userProvider.user != null
+                                                  ? PlainButton(
+                                                      icon: Icons.redeem,
+                                                      value: "Redeem",
+                                                      onTap: () async {
+                                                        bool isSuccess =
+                                                            await userProvider
+                                                                .redeemCoupon(
+                                                                    couponId:
+                                                                        coupon
+                                                                            .id);
+                                                        Navigator.pop(context);
+                                                        if (isSuccess) {
+                                                          _scaffoldKey
+                                                              .currentState
+                                                              .showSnackBar(
+                                                                  SnackBar(
+                                                            content: Text(
+                                                              'Successfully Created Coupon',
+                                                            ),
+                                                          ));
+                                                        } else {
+                                                          _scaffoldKey
+                                                              .currentState
+                                                              .showSnackBar(
+                                                                  SnackBar(
+                                                            content: Text(
+                                                              'Already Redeemed the Same Coupon',
+                                                            ),
+                                                          ));
+                                                        }
+                                                      },
+                                                    )
+                                                  : PlainButton(
+                                                      icon: Icons.lock_rounded,
+                                                      value: "Login to Redeem",
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    Authenticate(
+                                                                        showLogin:
+                                                                            true)));
+                                                        Navigator.pop(context);
+                                                      },
+                                                    )
                                             ],
                                           );
                                         });
