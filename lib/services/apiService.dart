@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:BestEatsLocal/models/coupon.dart';
 import 'package:BestEatsLocal/constants/apiConstants.dart';
 import 'package:BestEatsLocal/models/restaurant.dart';
+import 'package:BestEatsLocal/models/userCoupons.dart';
 import 'package:BestEatsLocal/services/httpService.dart';
 
 class ApiService {
@@ -83,6 +84,7 @@ class ApiService {
     Map<String, String> data = {
       "token": token,
     };
+    print(data);
     var response =
         await httpService.postRequest(_requestGetParams(), data: data);
     try {
@@ -115,11 +117,30 @@ class ApiService {
     }
   }
 
+  Future<List> getCouponsRedeemedByUser({int userId}) async {
+    HttpService httpService =
+        HttpService(requestLocation: _getUserRedeemsEndpoint(userId));
+    var response = await httpService.getRequest(
+      _requestGetParams(),
+    );
+    try {
+      List responseData = jsonDecode(response.body)['data'];
+      return responseData.map((coupon) => UserCoupon.fromMap(coupon)).toList();
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
   Map _requestGetParams() {
     return {"apiKey": apiKey};
   }
 
   String _getRestaurantCouponsEndpoint(int restaurantId) {
     return "$baseURL/restaurants/$restaurantId/coupons";
+  }
+
+  String _getUserRedeemsEndpoint(int userId) {
+    return "$baseURL/users/$userId/coupons";
   }
 }

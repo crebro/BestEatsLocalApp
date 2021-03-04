@@ -1,4 +1,5 @@
 import 'package:BestEatsLocal/pages/auth/authenticate.dart';
+import 'package:BestEatsLocal/pages/user_coupons.dart';
 import 'package:flutter/material.dart';
 import 'package:BestEatsLocal/providers/userProvider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -55,6 +56,12 @@ class ApplicationDrawer extends StatelessWidget {
                   children: [
                     getDrawerItem("Logout", Icons.exit_to_app, () async {
                       await userProvider.logout();
+                    }),
+                    getDrawerItem("Your Coupons", Icons.redeem_rounded, () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UserCoupons()));
                     }),
                   ],
                 )

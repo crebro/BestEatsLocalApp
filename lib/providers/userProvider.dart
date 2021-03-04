@@ -26,6 +26,7 @@ class UserProvider extends ChangeNotifier {
     if (prefs.getString("token") != null) {
       ApiService apiService = ApiService();
       Map response = await apiService.warmUser(prefs.getString("token"));
+      print(response);
       this._user = response;
       notifyListeners();
     }
@@ -65,5 +66,17 @@ class UserProvider extends ChangeNotifier {
     }
     // Returning False Because the user is not logged in
     return false;
+  }
+
+  Future<List> getCouponsRedeemedByUser() async {
+    ApiService apiService = ApiService();
+    List response =
+        await apiService.getCouponsRedeemedByUser(userId: _user['id']);
+    print(response);
+    if (response != null) {
+      // Returning true if message_code is success, false if something else
+      return response;
+    }
+    return null;
   }
 }
