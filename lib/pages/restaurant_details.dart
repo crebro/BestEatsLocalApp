@@ -164,14 +164,14 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                                                       icon: Icons.lock_rounded,
                                                       value: "Login to Redeem",
                                                       onTap: () {
-                                                        Navigator.push(
+                                                        Navigator.pop(context);
+                                                        Navigator.pushReplacement(
                                                             context,
                                                             MaterialPageRoute(
                                                                 builder: (context) =>
                                                                     Authenticate(
                                                                         showLogin:
                                                                             true)));
-                                                        Navigator.pop(context);
                                                       },
                                                     )
                                             ],
