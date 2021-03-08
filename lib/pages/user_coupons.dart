@@ -1,5 +1,6 @@
 import 'package:BestEatsLocal/models/coupon.dart';
 import 'package:BestEatsLocal/models/userCoupons.dart';
+import 'package:BestEatsLocal/pages/coupon_qr.dart';
 import 'package:BestEatsLocal/providers/userProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,62 +69,73 @@ class _UserCouponsState extends State<UserCoupons> {
                     crossAxisCount: 2,
                     children: userCoupons
                         .map(
-                          (coupon) => VxBox(
-                              child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  Container(
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: QrImage(
-                                          data: coupon.useToken,
-                                          size: 180,
-                                        )),
-                                  ),
-                                  Positioned(
-                                    top: 100,
-                                    bottom: 0,
-                                    left: 0,
-                                    right: 0,
-                                    child: Container(
+                          (coupon) => GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (conetxt) => CouponQrPage(
+                                            userCoupon: coupon,
+                                          )));
+                            },
+                            child: VxBox(
+                                child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
                                       child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          child: Image.network(
-                                            coupon.restaurantImage,
-                                            height: 90,
-                                            width: 180,
-                                            fit: BoxFit.cover,
+                                          child: QrImage(
+                                            data: coupon.useToken,
+                                            size: 180,
                                           )),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    width: 180,
-                                    child: getTruncatedTitle(coupon.value)
-                                        .text
-                                        .xl
-                                        .maxLines(2)
-                                        .overflow(TextOverflow.ellipsis)
-                                        // .textStyle(GoogleFonts.robotoSlab())
-                                        .bold
-                                        .black
-                                        .make(),
-                                  ),
-                                ],
-                              ))
-                            ],
-                          )).padding(EdgeInsets.all(15)).neumorphic().make(),
+                                    Positioned(
+                                      top: 100,
+                                      bottom: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: Container(
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Image.network(
+                                              coupon.restaurantImage,
+                                              height: 90,
+                                              width: 180,
+                                              fit: BoxFit.cover,
+                                            )),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                    child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      width: 180,
+                                      child: getTruncatedTitle(coupon.value)
+                                          .text
+                                          .xl
+                                          .maxLines(2)
+                                          .overflow(TextOverflow.ellipsis)
+                                          // .textStyle(GoogleFonts.robotoSlab())
+                                          .bold
+                                          .black
+                                          .make(),
+                                    ),
+                                  ],
+                                ))
+                              ],
+                            )).padding(EdgeInsets.all(15)).neumorphic().make(),
+                          ),
                         )
                         .toList()))
           ],
