@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:BestEatsLocal/models/coupon.dart';
 import 'package:BestEatsLocal/models/restaurant.dart';
 import 'package:BestEatsLocal/pages/auth/authenticate.dart';
-import 'package:BestEatsLocal/pages/auth/login.dart';
 import 'package:BestEatsLocal/providers/userProvider.dart';
 import 'package:BestEatsLocal/services/apiService.dart';
 import 'package:flutter/material.dart';
@@ -140,8 +139,8 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                                                                             .id);
                                                         Navigator.pop(context);
                                                         if (isSuccess) {
-                                                          _scaffoldKey
-                                                              .currentState
+                                                          ScaffoldMessenger.of(
+                                                                  context)
                                                               .showSnackBar(
                                                                   SnackBar(
                                                             content: Text(
@@ -149,8 +148,8 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                                                             ),
                                                           ));
                                                         } else {
-                                                          _scaffoldKey
-                                                              .currentState
+                                                          ScaffoldMessenger.of(
+                                                                  context)
                                                               .showSnackBar(
                                                                   SnackBar(
                                                             content: Text(
@@ -193,7 +192,6 @@ class _RestaurantDetailsState extends State<RestaurantDetails> {
                               );
                             },
                           );
-                          ;
                         }))
               ],
             ),

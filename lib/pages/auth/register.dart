@@ -141,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (success) {
                             Navigator.pop(context);
                           } else {
-                            Scaffold.of(context).showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text("Error Registering an Account")));
                           }
                         }
