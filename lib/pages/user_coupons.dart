@@ -1,3 +1,4 @@
+import 'package:BestEatsLocal/models/coupon.dart';
 import 'package:BestEatsLocal/models/userCoupons.dart';
 import 'package:BestEatsLocal/providers/userProvider.dart';
 import 'package:flutter/material.dart';
@@ -63,20 +64,41 @@ class _UserCouponsState extends State<UserCoupons> {
             ),
             Expanded(
                 child: GridView.count(
-                    childAspectRatio: 1 / 1.4,
+                    childAspectRatio: 1 / 1.5,
                     crossAxisCount: 2,
                     children: userCoupons
                         .map(
                           (coupon) => VxBox(
                               child: Column(
                             children: [
-                              Container(
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: QrImage(
-                                      data: coupon.useToken,
-                                      size: 180,
-                                    )),
+                              Stack(
+                                children: [
+                                  Container(
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: QrImage(
+                                          data: coupon.useToken,
+                                          size: 180,
+                                        )),
+                                  ),
+                                  Positioned(
+                                    top: 100,
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                    child: Container(
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: Image.network(
+                                            coupon.restaurantImage,
+                                            height: 90,
+                                            width: 180,
+                                            fit: BoxFit.cover,
+                                          )),
+                                    ),
+                                  ),
+                                ],
                               ),
                               SizedBox(
                                 height: 10,

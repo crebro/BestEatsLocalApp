@@ -3,6 +3,7 @@ class UserCoupon {
   String description;
   int id;
   String useToken;
+  String restaurantImage;
   UserCoupon({
     this.value,
     this.description,
@@ -12,5 +13,6 @@ class UserCoupon {
     this.description = map['description'];
     this.id = map['id'];
     this.useToken = map['use_token'];
+    this.restaurantImage = map['restaurant_image'];
   }
 }
